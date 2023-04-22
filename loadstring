@@ -1,0 +1,25 @@
+-- Define the list of games and their corresponding script URLs
+local games = {
+    [10714365287] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Anime%20Race%20Clicker",
+    [3101667897] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Legends%20Of%20Speed",
+    [142823291] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Murder%20Mystery%202",
+    [12851888521] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Punch%20Wall%20Simulator",
+    [12980045478] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Wall%20Smash%20Simulator",
+    [3297964905] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Weaponry"
+}
+
+-- Get the URL for the script corresponding to the current game
+local gameScript = games[game.PlaceId]
+
+-- If a script URL is found for the current game, load it
+if gameScript then
+    local success, err = pcall(function()
+        loadstring(game:HttpGet(gameScript))()
+    end)
+
+    if not success then
+        warn("Error loading script: " .. err)
+    end
+else
+    warn("No script URL found for game ID " .. game.PlaceId)
+end
