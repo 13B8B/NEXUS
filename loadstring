@@ -6,7 +6,7 @@ local games = {
     [12851888521] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Punch%20Wall%20Simulator",
     [12980045478] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Wall%20Smash%20Simulator",
     [3297964905] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Weaponry",
-    [12373987363] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Prison%20Race%20Clicker"
+    [12373987363] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Prison%20Race%20Clicker",
     [6650622018] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Block%20Mine"
 }
 
