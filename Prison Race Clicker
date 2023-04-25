@@ -125,7 +125,7 @@ L_10_:CreateButton({
 	end,
 })  
 local L_11_ = L_9_:CreateTab("Misc", 12558214594)
-L_11_:CreateSection("Auto Race")
+L_11_:CreateSection("Eggs")
 _G.selectedPet = nil
 local L_12_ = {
 	["Basic"] = {
