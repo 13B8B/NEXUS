@@ -1,40 +1,29 @@
 repeat
 	wait()
 until game:IsLoaded() and game.Players and game.Players.LocalPlayer and game.Players.LocalPlayer.Character
-local L_1_ = game:GetService("Players")
-local L_2_ = L_1_.LocalPlayer
-  
+local L_1_ = game:GetService("ReplicatedStorage")
+local L_2_ = game:GetService("Players").LocalPlayer
 local function L_3_func()
-	local L_33_ = "https://tryhardguides.com/block-mine/"
-	local L_34_ = game:HttpGet(L_33_);
-	local L_35_ = {};
-	for L_36_forvar0 in string.gmatch(L_34_, "<ul>(.-)</ul>") do
-		for L_37_forvar0 in string.gmatch(L_36_forvar0, "<li>(.-)</li>") do
-			for L_38_forvar0 in string.gmatch(L_37_forvar0, "<strong>([^<]+)</strong>") do
-				table.insert(L_35_, L_38_forvar0);
+	local L_42_ = "https://tryhardguides.com/punch-wall-simulator-codes/"
+	local L_43_ = game:HttpGet(L_42_);
+	local L_44_ = {};
+	for L_45_forvar0 in string.gmatch(L_43_, "<ul>(.-)</ul>") do
+		for L_46_forvar0 in string.gmatch(L_45_forvar0, "<li>(.-)</li>") do
+			for L_47_forvar0 in string.gmatch(L_46_forvar0, "<strong>([^<]+)</strong>") do
+				table.insert(L_44_, L_47_forvar0);
 			end
 		end
 	end
-	for L_39_forvar0, L_40_forvar1 in next, L_35_ do
-		game:GetService("ReplicatedStorage").Remotes.CodeRequest:InvokeServer(L_40_forvar1)
+	for L_48_forvar0, L_49_forvar1 in next, L_44_ do
+		L_1_["functions-shared/network@GlobalFunctions"]["s:redeemCode"]:FireServer(0, L_49_forvar1)
 	end
 end
-local function L_4_func(L_41_arg0, L_42_arg1)
-	local L_43_ = L_2_.Character.HumanoidRootPart
-	local L_44_ = TweenInfo.new(L_42_arg1, Enum.EasingStyle.Quad)
-	local L_45_ = game:GetService("TweenService"):Create(L_43_, L_44_, {
-		CFrame = CFrame.new(L_41_arg0)
-	})
-	L_45_:Play()
-	wait(L_42_arg1)
-end
-
-local L_5_, L_6_, L_7_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/13B8B/ARCHIVE/main/Load.lua"))()
-local L_8_ = L_7_()
-local L_9_ = L_6_:CreateWindow({
-	Name = "NEXUS : Block Mine",
+local L_4_, L_5_, L_6_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/13B8B/ARCHIVE/main/Load.lua"))()
+local L_7_ = L_6_()
+local L_8_ = L_5_:CreateWindow({
+	Name = "NEXUS : Mine Blocks Simulator",
 	LoadingTitle = "Nexus Central",
-	LoadingSubtitle = "Block Mine",
+	LoadingSubtitle = "Mine Blocks Simulator",
 	ConfigurationSaving = {
 		Enabled = true,
 		FolderName = "NEXUS-CONFIG",
@@ -46,294 +35,383 @@ local L_9_ = L_6_:CreateWindow({
 		RememberJoins = false
 	}
 })
-
-local L_10_ = L_9_:CreateTab("Main", 13054639921)
-L_10_:CreateSection("Auto Farm")
-L_10_:CreateToggle({
-	Name = "Auto Wins",
+game:GetService("CoreGui").PurchasePrompt.Enabled = false
+local L_9_ = L_8_:CreateTab("Main", 13054639921)
+L_9_:CreateSection("Auto Farm")
+L_9_:CreateToggle({
+	Name = "Auto Stength",
 	CurrentValue = false,
-	Flag = "AutoFarm",
-	Callback = function(L_46_arg0)
-	end,
-})
-task.spawn(function()
-	while task.wait() do
-		if L_6_.Flags.AutoFarm.CurrentValue then
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(- 1435.95, - 116.248, 56.6882)
-			wait(2)
-		end
-	end 
-end)
-
-L_10_:CreateSection("Shop")
-
-L_10_:CreateToggle({
-	Name = "Auto Buy Pickaxes",
-	CurrentValue = false,
-	Flag = "AutoBuy",
-	Callback = function(L_47_arg0)
-	end,
-})
-task.spawn(function()
-	while task.wait() do
-		if L_6_.Flags.AutoBuy.CurrentValue then
-			for L_48_forvar0, L_49_forvar1 in ipairs(game:GetService("ReplicatedStorage").Pickaxes:GetChildren()) do
-				game:GetService("ReplicatedStorage").Remotes.BuyPickaxe:FireServer(L_49_forvar1.Name)
-			end
-		end
-	end 
-end)
-
-L_10_:CreateToggle({
-	Name = "Auto Buy Trails",
-	CurrentValue = false,
-	Flag = "AutoBuyTrails",
+	Flag = "AutoStrength",
 	Callback = function(L_50_arg0)
 	end,
 })
-task.spawn(function()
-	while task.wait() do
-		if L_6_.Flags.AutoBuyTrails.CurrentValue then
-			for L_51_forvar0, L_52_forvar1 in ipairs(game:GetService("Lighting").Trails:GetChildren()) do
-				game:GetService("ReplicatedStorage").Remotes.BuyTrail:FireServer(L_52_forvar1.Name)
-			end
+local function L_10_func()
+	local L_51_ = game:GetService("Players").LocalPlayer
+	local L_52_ = L_51_.Character.HumanoidRootPart.CFrame
+	local L_53_ = game:GetService("Players").LocalPlayer.Rebirth.Value
+	local L_54_ = L_51_.leaderstats.Wins.Value
+	L_54_ = string.gsub(L_54_, ",", "") -- remove commas
+	if string.sub(L_54_, -1) == "M" then -- check if the string ends with "M"
+		L_54_ = tonumber(string.sub(L_54_, 1, -2)) * 1000000 -- convert to number and multiply by 1,000,000
+	else
+		L_54_ = tonumber(L_54_) -- convert to number
+	end
+	local L_55_, L_56_ = pcall(function()
+		if tonumber(L_53_) < 3 then
+			game:GetService("ReplicatedStorage").Events.Box:FireServer(workspace.Box["8"].Model)
+		elseif tonumber(L_53_) < 10 then
+			game:GetService("ReplicatedStorage").Events.Box:FireServer(workspace.Box["9"].Model)
+		else
+			game:GetService("ReplicatedStorage").Events.Box:FireServer(workspace.Box["10"].Model)
 		end
-	end   
+	end)
+	if not L_55_ then
+		warn(L_56_)
+	end
+end
+local L_11_ = game:GetService("RunService")
+L_11_.Stepped:Connect(function(L_57_arg0)
+	if L_5_.Flags.AutoStrength.CurrentValue then
+		for L_58_forvar0 = 1, 3 do
+			L_10_func()
+		end
+	end
 end)
-
-L_10_:CreateSection("Auto Hatch / Strength")
+L_9_:CreateToggle({
+	Name = "Auto Wins",
+	CurrentValue = false,
+	Flag = "AutoRank",
+	Callback = function(L_59_arg0)
+	end,
+})
+local function L_12_func()
+	local L_60_ = game:GetService("Players").LocalPlayer
+	local L_61_ = L_60_.Character.HumanoidRootPart.CFrame
+	local L_62_ = game:GetService("Players").LocalPlayer.Rebirth.Value
+	local L_63_ = L_60_.leaderstats.Wins.Value
+	L_63_ = string.gsub(L_63_, ",", "") -- remove commas
+	if string.sub(L_63_, -1) == "M" then -- check if the string ends with "M"
+		L_63_ = tonumber(string.sub(L_63_, 1, -2)) * 1000000 -- convert to number and multiply by 1,000,000
+	else
+		L_63_ = tonumber(L_63_) -- convert to number
+	end
+	local L_64_, L_65_ = pcall(function()
+		if tonumber(L_62_) < 3 then
+			print("ASS")
+			L_60_.Character.HumanoidRootPart.CFrame = CFrame.new(-68, -90, 425)
+		elseif tonumber(L_62_) < 10 then
+			L_60_.Character.HumanoidRootPart.CFrame = CFrame.new(-69, -90, 538)
+		else
+			L_60_.Character.HumanoidRootPart.CFrame = CFrame.new(-67, -90, 647)
+		end
+	end)
+	if not L_64_ then
+		warn(L_65_)
+	end
+	wait(3)
+end
+task.spawn(function()
+	while wait() do
+		if L_5_.Flags.AutoRank.CurrentValue then
+			L_12_func()
+		end
+	end 
+end)
+L_9_:CreateSection("Other")
+L_9_:CreateToggle({
+	Name = "Auto Spin Wheel",
+	CurrentValue = false,
+	Flag = "AutoWheel",
+	Callback = function(L_66_arg0)
+	end,  
+})
+task.spawn(function()
+	while wait(1) do
+		if L_5_.Flags.AutoWheel.CurrentValue then
+			game:GetService("ReplicatedStorage").Wheel:FireServer()
+		end
+	end 
+end)  
+L_9_:CreateToggle({
+	Name = "Auto Rebirth",
+	CurrentValue = false,
+	Flag = "AutoRebirth",
+	Callback = function(L_67_arg0)
+	end,
+})
+task.spawn(function()
+	while task.wait(1) do
+		if L_5_.Flags.AutoRebirth.CurrentValue then
+			game:GetService("ReplicatedStorage").Events.Rebirth:FireServer(true)
+		end
+	end 
+end)  
+L_9_:CreateSection("Auto Hatch")
 _G.selectedPet = nil
-local L_11_ = {
-	["Common"] = {
-		capsuleName = "Common",
+
+local L_13_ = {
+	["Zone 1"] = {
+		capsuleName = "Zone 1",
 		price = 5
 	},
-	["Uncommon"] = {
-		capsuleName = "Uncommon",
-		price = 10
+	["Zone 2"] = {
+		capsuleName = "Zone 2",
+		price = 30
 	},
-	["Rare"] = {
-		capsuleName = "Rare",
-		price = 50
+	["Zone 3"] = {
+		capsuleName = "Zone 3",
+		price = 150
 	},
-	["Legendary"] = {
-		capsuleName = "Legendary",
-		price = 200
+	["Zone 4"] = {
+		capsuleName = "Zone 4",
+		price = 250
 	},
-	["Jungle"] = {
-		capsuleName = "Jungle",
+	["Zone 5"] = {
+		capsuleName = "Zone 5",
 		price = 500
 	},
-	["Lava"] = {
-		capsuleName = "Lava",
+	["Zone 6"] = {
+		capsuleName = "Zone 6",
 		price = 1000
 	},
-	["Warrior"] = {
-		capsuleName = "Warrior",
+	["Zone 7"] = {
+		capsuleName = "Zone 7",
+		price = 3000
+	},
+	["Zone 8"] = {
+		capsuleName = "Zone 8",
 		price = 5000
 	},
+	["Zone 9"] = {
+		capsuleName = "Zone 9",
+		price = 8000
+	},
+	["Zone 10"] = {
+		capsuleName = "Zone 10",
+		price = 14000
+	},
 }
-L_10_:CreateDropdown({
+
+L_9_:CreateDropdown({
 	Name = "Selected Pet",
 	Options = {
-		"Common (5 Win)",
-		"Uncommon (10 Wins)",
-		"Rare (50 Wins)",
-		"Legendary (200 Wins)",
-		"Jungle (500 Wins)",
-		"Lava (1K Wins)",
-		"Warrior (5K Wins)"
+		"Zone 1 (5 Wins)",
+		"Zone 2 (30 Wins)",
+		"Zone 3 (150 Wins)",
+		"Zone 4 (250 Wins)",
+		"Zone 5 (500 Wins)",
+		"Zone 6 (1K Wins)",
+		"Zone 7 (3K Wins)",
+		"Zone 8 (5K Wins)",
+		"Zone 9 (8K Wins)",
+		"Zone 10 (14K Wins)"
 	},
 	CurrentOption = "...",
-	Callback = function(L_53_arg0)
-		local L_54_ = L_11_[string.match(L_53_arg0, "(.-) %(")]
-		if L_54_ then
-			_G.selectedPet = L_54_.capsuleName
-			local L_55_ = L_54_.price
-			if L_55_ >= 1000 then
-				L_55_ = string.format("%.1fK", L_55_ / 1000)
+	Callback = function(L_68_arg0)
+		local L_69_ = L_13_[string.match(L_68_arg0, "(.-) %(")]
+		if L_69_ then
+			_G.selectedPet = L_69_.capsuleName
+			local L_70_ = L_69_.price
+			if L_70_ >= 1000 then
+				L_70_ = string.format("%.1fK", L_70_ / 1000)
 			end
-			print("You have selected the " .. L_54_.capsuleName .. " pet for " .. L_55_ .. " coins.")
+			print("You have selected the " .. L_69_.capsuleName .. " pet for " .. L_70_ .. " coins.")
 		end
 	end
 })
-L_10_:CreateToggle({
+_G.selectedPet = "Zone 1"  
+
+L_9_:CreateToggle({
 	Name = "Auto Hatch",
 	CurrentValue = false,
 	Flag = "AutoHatch",
-	Callback = function(L_56_arg0)
-		_G.autoHatch = L_56_arg0
+	Callback = function(L_71_arg0)
+		_G.autoHatch = L_71_arg0
 		autoHatch()
 	end
 })
 function autoHatch()
-	_G.selectedPet = _G.selectedPet
+	_G.selectedPet = _G.selectedPet or "Zone 1"
 	while _G.autoHatch do
-		wait(0.1)
-		if _G.selectedPet then
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Eggs[_G.selectedPet].UIanchor.CFrame + Vector3.new(0, 8, 0)
-			game:GetService("ReplicatedStorage").RemoteEvents.EggOpened:InvokeServer(_G.selectedPet, "Single")
+		wait()
+		if _G.selectedPet then  -- make sure selected pet is not nil
+			game.ReplicatedStorage.Events.OpenPet:FireServer(workspace.Pet:FindFirstChild(_G.selectedPet), false)
 		end
 	end
 end
-L_10_:CreateButton({
-	Name = "Strength",
-	Callback = function()
-		local L_57_ = 9999999
-		game:GetService("ReplicatedStorage").Remotes.Anvil:FireServer(L_57_)
+local L_14_ = L_8_:CreateTab("Misc", 12558214594)
+L_14_:CreateSection("Misc")
+L_14_:CreateToggle({
+	Name = "Auto Equip Best Pets",
+	CurrentValue = false,
+	Flag = "EquipBest",
+	Callback = function(L_72_arg0)
 	end,
-})  
-local L_12_ = L_9_:CreateTab("User", 12559105272)
-L_12_:CreateSection("Player Config")
-local L_13_ = game:GetService"UserInputService"
-local L_14_ = game:GetService("UserInputService")
-local L_15_ = game:GetService("RunService")
-local L_16_ = game.Players.LocalPlayer
-local L_17_ = L_16_.Character or L_16_.CharacterAdded:Wait()
-local L_18_ = L_17_:WaitForChild("Humanoid")
-local L_19_ = false
-L_12_:CreateToggle({
-	Name = "Infinite-Jump",
-	CurrentValue = L_19_,
-	Flag = "InfiJump",
-	Callback = function(L_58_arg0)
-		L_19_ = L_58_arg0;
-	end
 })
-game:GetService("UserInputService").InputBegan:Connect(function(L_59_arg0, L_60_arg1)
-	if not L_60_arg1 and L_59_arg0.KeyCode == Enum.KeyCode.Space and L_19_ then
-		game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+task.spawn(function()
+	while wait(5) do
+		if L_5_.Flags.EquipBest.CurrentValue then
+			local L_73_ = "EquipBest"
+			game:GetService("ReplicatedStorage").PetSystem.SystemEquipButon:FireServer(L_73_)
+		end
+	end 
+end)  
+
+L_14_:CreateButton({
+	Name = "Redeem Codes",
+	Callback = function()
+       -- RedeemCodes() STILL NO CODE SYSTEM
+	end,
+})
+local L_15_ = L_8_:CreateTab("User", 12559105272)
+L_15_:CreateSection("Player Config")
+local L_16_ = game:GetService"UserInputService"
+local L_17_ = game:GetService("UserInputService")
+local L_18_ = game:GetService("RunService")
+local L_19_ = game.Players.LocalPlayer
+local L_20_ = L_19_.Character or L_19_.CharacterAdded:Wait()
+local L_21_ = L_20_:WaitForChild("Humanoid")
+local L_22_ = false
+local L_23_ = false
+local function L_24_func()
+	if L_22_ and L_23_ then
+		L_21_.Jump = true
+	end
+end
+L_17_.InputBegan:Connect(function(L_74_arg0, L_75_arg1)
+	if not L_75_arg1 and L_74_arg0.KeyCode == Enum.KeyCode.Space then
+		L_22_ = true
+		L_24_func()
 	end
 end)
-local L_20_ = false
-local L_21_ = L_12_:CreateToggle({
+L_17_.InputEnded:Connect(function(L_76_arg0, L_77_arg1)
+	if not L_77_arg1 and L_76_arg0.KeyCode == Enum.KeyCode.Space then
+		L_22_ = false
+	end
+end)
+L_18_.Heartbeat:Connect(function()
+	if L_22_ and L_23_ then
+		L_21_:ChangeState(Enum.HumanoidStateType.Jumping)
+	end
+end)
+L_15_:CreateToggle({
+	Name = "Infinite-Jump",
+	CurrentValue = L_23_,
+	Flag = "InfiJump",
+	Callback = function(L_78_arg0)
+		L_23_ = L_78_arg0;
+	end
+})
+local L_25_ = false
+local L_26_ = L_15_:CreateToggle({
 	Name = "Basic Player Speed",
 	CurrentValue = false,
 	Flag = "",
-	Callback = function(L_61_arg0)
-		L_20_ = L_61_arg0;
+	Callback = function(L_79_arg0)
+		L_25_ = L_79_arg0
 	end
 })
-local L_22_ = game:GetService("Players").LocalPlayer
-if getgenv().noclip and L_22_.Character:FindFirstChild("Humanoid") then
-	L_22_.Character.Humanoid:ChangeState(10)
+local L_27_ = game:GetService("Players").LocalPlayer
+if getgenv().noclip and L_27_.Character:FindFirstChild("Humanoid") then
+	L_27_.Character.Humanoid:ChangeState(11)
 end  
-local L_23_ = false
-local function L_24_func(L_62_arg0)
-	if L_62_arg0.UserInputType == Enum.UserInputType.Keyboard and L_62_arg0.KeyCode == Enum.KeyCode.W then
-		L_23_ = true
+local L_28_ = false
+local function L_29_func(L_80_arg0)
+	if L_80_arg0.UserInputType == Enum.UserInputType.Keyboard and L_80_arg0.KeyCode == Enum.KeyCode.W then
+		L_28_ = true
 	end
 end
-local function L_25_func(L_63_arg0)
-	if L_63_arg0.UserInputType == Enum.UserInputType.Keyboard and L_63_arg0.KeyCode == Enum.KeyCode.W then
-		L_23_ = false
+local function L_30_func(L_81_arg0)
+	if L_81_arg0.UserInputType == Enum.UserInputType.Keyboard and L_81_arg0.KeyCode == Enum.KeyCode.W then
+		L_28_ = false
 	end  
 end
 task.spawn(function()
 	while wait(0.005) do
-		if L_20_ and L_23_ and L_22_.Character and L_22_.Character.HumanoidRootPart then
-			L_22_.Character.HumanoidRootPart.CFrame = L_22_.Character.HumanoidRootPart.CFrame + L_22_.Character.HumanoidRootPart.CFrame.lookVector * 0.190
-			L_22_.Character.HumanoidRootPart.CFrame = L_22_.Character.HumanoidRootPart.CFrame + L_22_.Character.HumanoidRootPart.CFrame.lookVector * 0.190
-			L_22_.Character.HumanoidRootPart.CFrame = L_22_.Character.HumanoidRootPart.CFrame + L_22_.Character.HumanoidRootPart.CFrame.lookVector * 0.190
+		if L_25_ and L_28_ and L_27_.Character and L_27_.Character.HumanoidRootPart then
+			L_27_.Character.HumanoidRootPart.CFrame = L_27_.Character.HumanoidRootPart.CFrame + L_27_.Character.HumanoidRootPart.CFrame.lookVector * 0.50
+			L_27_.Character.HumanoidRootPart.CFrame = L_27_.Character.HumanoidRootPart.CFrame + L_27_.Character.HumanoidRootPart.CFrame.lookVector * 0.50
+			L_27_.Character.HumanoidRootPart.CFrame = L_27_.Character.HumanoidRootPart.CFrame + L_27_.Character.HumanoidRootPart.CFrame.lookVector * 0.50
 		end
 	end
 end)
-local L_26_ = game:GetService("UserInputService")
-L_26_.InputBegan:Connect(L_24_func)
-L_26_.InputEnded:Connect(L_25_func)
-L_12_:CreateSection("WalkSpeed / Gravity")
-local L_27_ = false 
-local function L_28_func(L_64_arg0)
-	local L_65_ = game:GetService("Players")
-	for L_66_forvar0, L_67_forvar1 in ipairs(L_65_:GetPlayers()) do
-		local L_68_ = L_67_forvar1.Character and L_67_forvar1.Character:FindFirstChild("Humanoid")
-		if L_68_ then
-			L_68_.WalkSpeed = L_64_arg0
+local L_31_, L_32_, L_33_, L_34_ = game.GetService, game.FindFirstChild, game.Loaded.Connect, game.GetChildren;
+local L_35_ = L_31_(game, "Players")
+local L_36_ = game:GetService("UserInputService")
+L_36_.InputBegan:Connect(L_29_func)
+L_36_.InputEnded:Connect(L_30_func)
+L_15_:CreateSection("WalkSpeed / Gravity")
+local L_37_ = false 
+local function L_38_func(L_82_arg0)
+	for L_83_forvar0, L_84_forvar1 in ipairs(L_35_:GetPlayers()) do
+		local L_85_ = L_84_forvar1.Character and L_84_forvar1.Character:FindFirstChild("Humanoid")
+		if L_85_ then
+			L_85_.WalkSpeed = L_82_arg0
 		end
 	end
-end
-local function L_29_func(L_69_arg0)
-	local L_70_ = game:GetService("Players")
-	for L_71_forvar0, L_72_forvar1 in ipairs(L_70_:GetPlayers()) do
-		local L_73_ = L_72_forvar1.Character and L_72_forvar1.Character:FindFirstChild("Humanoid")
-		if L_73_ then
-			L_73_.JumpPower = L_69_arg0
-		end
-	end
-end
-L_12_:CreateToggle({
+end  
+L_15_:CreateToggle({
 	Name = "Walkspeed",
 	CurrentValue = false,
 	Flag = "WalkSpeed",
-	Callback = function(L_74_arg0)
+	Callback = function(L_86_arg0)
+		L_37_ = L_86_arg0
+		repeat
+			task.wait()
+			L_38_func(L_37_ and val or 50)
+		until L_37_ == false
 	end,
 })
-task.spawn(function()
-	while task.wait() do
-		if L_6_.Flags.WalkSpeed.CurrentValue then
-			repeat
-				task.wait()
-				L_28_func(val or 50)
-			until L_6_.Flags.WalkSpeed.CurrentValue == false
-		else
-			L_28_func(16)
-		end
-	end
-end)
-L_12_:CreateSlider({
+L_15_:CreateSlider({
 	Name = "Walk Speed",
 	Range = {
 		16,
 		100
 	},
 	Increment = 1,
-	Suffix = "Walk",
+	Suffix = "Delayy",
 	CurrentValue = 16,
-	Callback = function(L_75_arg0)
-		val = L_75_arg0
+	Callback = function(L_87_arg0)
+		val = L_87_arg0
 	end,
 })
-L_12_:CreateToggle({
-	Name = "Jump Power",
+L_15_:CreateToggle({
+	Name = "Gravity",
 	CurrentValue = false,
-	Flag = "JumpPower",
-	Callback = function(L_76_arg0)
-	end,
-})
-task.spawn(function()
-	while task.wait() do
-		if L_6_.Flags.JumpPower.CurrentValue then
+	Flag = "Gravityy",
+	Callback = function(L_88_arg0)
+		if L_88_arg0 then
 			repeat
 				task.wait()
-				L_29_func(jump or 50)
-			until L_6_.Flags.JumpPower.CurrentValue == false
+				game:GetService("Workspace").Gravity = (gravity or 45)
+			until L_5_.Flags.Gravityy.CurrentValue == false
 		else
-			L_29_func(50)
+			game:GetService("Workspace").Gravity = 58
 		end
-	end
-end)
-L_12_:CreateSlider({
-	Name = "Jump",  
-	Range = {
-		50,
-		200
-	},
-	Increment = 1,
-	Suffix = "Jump",
-	CurrentValue = 50,
-	Callback = function(L_77_arg0)
-		jump = L_77_arg0
 	end,
 })
-local L_30_ = L_9_:CreateTab("Universe", 12558305562)
-local L_31_ = L_30_:CreateSection("Universe")
-L_30_:CreateToggle({
+L_15_:CreateSlider({
+	Name = "Gravity",
+	Range = {
+		0,
+		60
+	},
+	Increment = 1,
+	Suffix = "Delayy",
+	CurrentValue = 16,
+	Callback = function(L_89_arg0)
+		gravity = L_89_arg0
+	end,
+})
+local L_39_ = L_8_:CreateTab("Universe", 12558305562)
+local L_40_ = L_39_:CreateSection("Universe")
+L_39_:CreateToggle({
 	Name = "Auto Rejoin",
 	CurrentValue = false,
 	Flag = "Universal-AutoRejoin",
-	Callback = function(L_78_arg0)
-		if L_78_arg0 then
-			L_6_:Notify({
+	Callback = function(L_90_arg0)
+		if L_90_arg0 then
+			L_5_:Notify({
 				Title = "Notification",
 				Content = "You will auto rejoin if you are kicked or disconnected from the game",
 				Duration = 5,
@@ -342,11 +420,11 @@ L_30_:CreateToggle({
 			repeat
 				task.wait()
 			until game.CoreGui:FindFirstChild('RobloxPromptGui')
-			local L_79_, L_80_, L_81_ = game:GetService('Players').LocalPlayer, game.CoreGui.RobloxPromptGui.promptOverlay, game:GetService('TeleportService')
-			L_80_.ChildAdded:connect(function(L_82_arg0)
-				if L_82_arg0.Name == 'ErrorPrompt' then
+			local L_91_, L_92_, L_93_ = game:GetService('Players').LocalPlayer, game.CoreGui.RobloxPromptGui.promptOverlay, game:GetService('TeleportService')
+			L_92_.ChildAdded:connect(function(L_94_arg0)
+				if L_94_arg0.Name == 'ErrorPrompt' then
 					while true do
-						L_81_:Teleport(game.PlaceId)
+						L_93_:Teleport(game.PlaceId)
 						task.wait(2)
 					end
 				end
@@ -354,79 +432,84 @@ L_30_:CreateToggle({
 		end
 	end,
 })
-L_30_:CreateToggle({
+L_39_:CreateToggle({
 	Name = "Auto ReExecute",
 	CurrentValue = false,
 	Flag = "Universal-AutoRe-Execute",
-	Callback = function(L_83_arg0)
-		if L_83_arg0 then
-			local L_84_ = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-			if L_84_ then
-				L_84_('loadstring(game:HttpGet("https://raw.githubusercontent.com/13B8B/NEXUS/main/loadstring"))()')
+	Callback = function(L_95_arg0)
+		if L_95_arg0 then
+			local L_96_ = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+			if L_96_ then
+				L_96_('loadstring(game:HttpGet("https://raw.githubusercontent.com/13B8B/NEXUS/main/loadstring"))()')
 			end
 		end
 	end,
 })
-L_30_:CreateButton({
+L_39_:CreateButton({
 	Name = "Rejoin-Server",
 	Callback = function()
-		game:GetService("TeleportService"):Teleport(game.PlaceId, L_16_)
+		game:GetService("TeleportService"):Teleport(game.PlaceId, L_19_)
 	end,
 })
-L_30_:CreateButton({
+L_39_:CreateButton({
 	Name = "Server-Hop",
 	Callback = function()
-		local L_85_ = game:GetService("HttpService")
-		local L_86_ = game:GetService("TeleportService")
-		local L_87_ = "https://games.roblox.com/v1/games/"
-		local L_88_, L_89_ = game.PlaceId, game.JobId
-		local L_90_ = L_87_ .. L_88_ .. "/servers/Public?sortOrder=Desc&limit=100"
-		local function L_91_func(L_93_arg0)
-			local L_94_ = game:HttpGet(L_90_ .. ((L_93_arg0 and "&cursor=" .. L_93_arg0) or ""))
-			return L_85_:JSONDecode(L_94_)
+		local L_97_ = game:GetService("HttpService")
+		local L_98_ = game:GetService("TeleportService")
+		local L_99_ = "https://games.roblox.com/v1/games/"
+		local L_100_, L_101_ = game.PlaceId, game.JobId
+		local L_102_ = L_99_ .. L_100_ .. "/servers/Public?sortOrder=Desc&limit=100"
+		local function L_103_func(L_105_arg0)
+			local L_106_ = game:HttpGet(L_102_ .. ((L_105_arg0 and "&cursor=" .. L_105_arg0) or ""))
+			return L_97_:JSONDecode(L_106_)
 		end
-		local L_92_;
+		local L_104_;
 		repeat
-			local L_95_ = L_91_func(L_92_)
-			for L_96_forvar0, L_97_forvar1 in next, L_95_.data do
-				if L_97_forvar1.playing < L_97_forvar1.maxPlayers and L_97_forvar1.id ~= L_89_ then
-					local L_98_, L_99_ = pcall(L_86_.TeleportToPlaceInstance, L_86_, L_88_, L_97_forvar1.id, L_16_)
-					if L_98_ then
+			local L_107_ = L_103_func(L_104_)
+			for L_108_forvar0, L_109_forvar1 in next, L_107_.data do
+				if L_109_forvar1.playing < L_109_forvar1.maxPlayers and L_109_forvar1.id ~= L_101_ then
+					local L_110_, L_111_ = pcall(L_98_.TeleportToPlaceInstance, L_98_, L_100_, L_109_forvar1.id, L_19_)
+					if L_110_ then
 						break
 					end
 				end
 			end
-			L_92_ = L_95_.nextPageCursor
-		until not L_92_
+			L_104_ = L_107_.nextPageCursor
+		until not L_104_
 	end,
 })
-L_30_:CreateSection("Detector")
-local L_32_ = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Creator.CreatorTargetId
-L_30_:CreateToggle({
+L_39_:CreateSection("Detector")
+local L_41_ = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Creator.CreatorTargetId
+L_39_:CreateToggle({
 	Name = "Moderator Detector",
 	CurrentValue = false,
 	Flag = "Universal-AutoLeave",
-	Callback = function(L_100_arg0)
-		if L_100_arg0 then
-			for L_101_forvar0, L_102_forvar1 in pairs(game.Players:GetPlayers()) do
+	Callback = function(L_112_arg0)
+		if L_112_arg0 then
+			for L_113_forvar0, L_114_forvar1 in pairs(game.Players:GetPlayers()) do
 				pcall(function()
-					if L_102_forvar1:IsInGroup(L_32_) and L_102_forvar1:GetRankInGroup(L_32_) > 1 then
+					if L_114_forvar1:IsInGroup(L_41_) and L_114_forvar1:GetRankInGroup(L_41_) > 1 then
 						AutoRejoin:Set(false)
-						L_16_:Kick("Detected Staff")
+						L_19_:Kick("Detected Staff")
 					end
 				end)
 			end
 		end
 	end,
 })
-game:GetService("Players").PlayerAdded:Connect(function(L_103_arg0)
-	if L_6_.Flags["Universal-AutoLeave"].CurrentValue then
+game:GetService("Players").PlayerAdded:Connect(function(L_115_arg0)
+	if L_5_.Flags["Universal-AutoLeave"].CurrentValue then
 		pcall(function()
-			if L_103_arg0:IsInGroup(L_32_) and L_103_arg0:GetRankInGroup(L_32_) > 1 then
+			if L_115_arg0:IsInGroup(L_41_) and L_115_arg0:GetRankInGroup(L_41_) > 1 then
 				AutoRejoin:Set(false)
-				L_16_:Kick("Detected Staff")
+				L_19_:Kick("Detected Staff")
 			end
 		end)
 	end  
 end)
-L_6_:LoadConfiguration()
+task.spawn(function()
+	while wait(1) do
+		game:GetService("Players").LocalPlayer.PlayerGui.Notifications.Enabled = false
+	end
+end)
+L_5_:LoadConfiguration()
