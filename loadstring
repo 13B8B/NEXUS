@@ -7,7 +7,8 @@ local games = {
     [12980045478] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Wall%20Smash%20Simulator",
     [3297964905] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Weaponry",
     [12373987363] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Prison%20Race%20Clicker",
-    [6650622018] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Block%20Mine"
+    [6650622018] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Block%20Mine",
+    [13171269529] = "https://raw.githubusercontent.com/13B8B/NEXUS/main/Mine%20Blocks%20Simulator"
 }
 
 -- Get the URL for the script corresponding to the current game
